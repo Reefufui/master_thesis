@@ -78,11 +78,11 @@
 
 % First line of title
 %\newcommand{\TitleTop}[1]{\gdef\@TitleTop{\mbox{\uppercase{#1}}}}
-\newcommand{\TitleTop}[1]{\gdef\@TitleTop{\mbox{#1}}}
+\newcommand{\TitleTop}[1]{\gdef\@TitleTop{#1}}
 \newcommand{\TitleTopEng}[1]{\gdef\@TitleTopEng{\mbox{#1}}}
 
 % Second line of title
-\newcommand{\TitleBottom}[1]{\gdef\@TitleBottom{\mbox{#1}}}
+\newcommand{\TitleBottom}[1]{\gdef\@TitleBottom{#1}}
 \newcommand{\TitleBottomEng}[1]{\gdef\@TitleBottomEng{\mbox{#1}}}
 
 % Abstract text
@@ -387,9 +387,13 @@
 	    {\scriptsize \@Lab\\[\baselineskip]}
 	    \vfill
 	    {\Large \@Author \\[\baselineskip]}
-	    {%\HRule \\[0.4cm]
-	     \Large \textbf{\@TitleTop}\\
-	     \textbf{\@TitleBottom}\\[\baselineskip]
+	    {\Large
+	     \begin{minipage}{\linewidth}
+	       \centering
+	       \textbf{\@TitleTop}\\
+	       \textbf{\@TitleBottom}\\[\baselineskip]
+	       \vspace*{0.375in}
+	       \end{minipage}
 	      \large \@docname \\[\baselineskip] }
 	    %\HRule \\[1.5cm]
 	    \normalsize

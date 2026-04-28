@@ -1,0 +1,47 @@
+{
+  "hardware": {
+    "gpu": "NVIDIA RTX XXXX",
+    "cpu": "Intel Core iX-XXXXX",
+    "cpu_ghz": 3.6,
+    "ram_gb": 32,
+    "vulkan": "1.3.280"
+  },
+  "fps_by_size": [
+    {"model": "Dragon",    "size_mb": 4,  "ours": 198.3, "mesh": 87.2, "scom_rt": 41.5},
+    {"model": "Dragon",    "size_mb": 64, "ours": 42.1,  "mesh": 18.3, "scom_rt": 15.2},
+    {"model": "Bunny",     "size_mb": 2,  "ours": 210.0, "mesh": 91.0, "scom_rt": 44.0},
+    {"model": "Bunny",     "size_mb": 32, "ours": 55.3,  "mesh": 22.1, "scom_rt": 18.7},
+    {"model": "Armadillo", "size_mb": 4,  "ours": 185.0, "mesh": 80.0, "scom_rt": 38.0},
+    {"model": "Armadillo", "size_mb": 64, "ours": 39.0,  "mesh": 16.0, "scom_rt": 13.5}
+  ],
+  "fps_by_resolution": [
+    {"resolution": "1920x1080", "ours": 142.3, "scom_rt": 51.7},
+    {"resolution": "2560x1440", "ours": 98.1,  "scom_rt": 29.4},
+    {"resolution": "3840x2160", "ours": 51.2,  "scom_rt": 11.8}
+  ],
+  "psnr": [
+    {"model": "Dragon",    "ours": 38.4, "scom_rt": 41.2},
+    {"model": "Bunny",     "ours": 37.1, "scom_rt": 40.8},
+    {"model": "Armadillo", "ours": 36.9, "scom_rt": 40.1}
+  ],
+  "culling": [
+    {"model": "Dragon",    "frustum_pct": 62, "hiz_pct": 21, "total_pct": 83},
+    {"model": "Bunny",     "frustum_pct": 58, "hiz_pct": 17, "total_pct": 75},
+    {"model": "Armadillo", "frustum_pct": 65, "hiz_pct": 23, "total_pct": 88}
+  ],
+  "ablation": [
+    {"config": "Naive MC",          "fps": 18.3, "gain_pct": null},
+    {"config": "+ Frustum Culling", "fps": 28.7, "gain_pct": 57},
+    {"config": "+ Hi-Z Culling",    "fps": 38.1, "gain_pct": 33},
+    {"config": "+ Mesh Shaders",    "fps": 142.3, "gain_pct": 273}
+  ],
+  "city_scene": {
+    "fps": 44.7,
+    "gpu_memory_mb": 1840,
+    "total_leaves": 524288,
+    "active_leaves": 89341,
+    "frustum_pct": 71,
+    "hiz_pct": 19,
+    "lod_pct": 8
+  }
+}

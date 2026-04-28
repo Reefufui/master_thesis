@@ -35,6 +35,24 @@
 \usepackage{pdfpages}
 \usepackage{booktabs}
 
+\IfFileExists{generated/macros.tex}{
+  \input{generated/macros.tex}
+}{
+  \newcommand{\HWgpu}{[GPU модель]}
+  \newcommand{\HWcpu}{[CPU модель]}
+  \newcommand{\HWcpuGHz}{[X.X]}
+  \newcommand{\HWramGB}{[XX]}
+  \newcommand{\HWvulkan}{[1.3.XXX]}
+  \newcommand{\SpeedupMin}{[X.X]}
+  \newcommand{\SpeedupMax}{[X.X]}
+  \newcommand{\SpeedupAvg}{[X.X]}
+  \newcommand{\PSNRdiffMax}{[X.X]}
+  \newcommand{\PSNRdiffMin}{[X.X]}
+  \newcommand{\AblationSpeedup}{[X.X]}
+  \newcommand{\ResDegOurs}{[X.X]}
+  \newcommand{\ResDegScom}{[X.X]}
+}
+
 \Chair{Кафедра интеллектуальных информационных технологий}
 \Lab{~}
 \Year{2026}
@@ -268,8 +286,8 @@
 \subsubsection{Аппаратная конфигурация}
 
 Эксперименты проводились на следующей платформе:
-видеокарта~\textbf{[GPU модель]}, CPU~\textbf{[CPU модель]} @ \textbf{[X.X]~ГГц},
-RAM~\textbf{[XX]~ГБ}, Vulkan~\textbf{[1.3/1.4]}.
+видеокарта~\textbf{\HWgpu}, CPU~\textbf{\HWcpu} @ \textbf{\HWcpuGHz~ГГц},
+RAM~\textbf{\HWramGB~ГБ}, Vulkan~\textbf{\HWvulkan}.
 
 \subsubsection{Тестовые модели}
 
@@ -281,14 +299,14 @@ RAM~\textbf{[XX]~ГБ}, Vulkan~\textbf{[1.3/1.4]}.
   \caption{Тестовые модели.}
   \label{tab:scenes}
   \begin{tabular}{lrr}
-    \toprule
+
     \textbf{Модель} & \textbf{Треугольников} & \textbf{Размер SCom, МБ} \\
-    \midrule
+
     Dragon       &   871\,000 & [X.X]--[XX] \\
     Bunny        &    69\,000 & [X.X]--[XX] \\
     Armadillo    &   346\,000 & [X.X]--[XX] \\
     Happy Buddha & 1\,087\,000 & [X.X]--[XX] \\
-    \bottomrule
+
   \end{tabular}
 \end{table}
 
@@ -312,17 +330,8 @@ RAM~\textbf{[XX]~ГБ}, Vulkan~\textbf{[1.3/1.4]}.
   \caption{FPS при различном размере SCom-файла.}
   \label{tab:fps_by_size}
   \begin{tabular}{lrrrr}
-    \toprule
-    \textbf{Модель}
-      & \textbf{предложенный}
-      & \textbf{Mesh}
-      & \textbf{SCom RT} \\
-    \midrule
-    Dragon ([X] МБ)   & [XXX] & [XX.X] & [XX.X]  \\
-    Dragon ([XX] МБ)  & [XX.X] & [XX.X] & [XX.X]  \\
-    Bunny ([X] МБ)    & [XXX] & [XX.X] & [XX.X]  \\
-    Bunny ([XX] МБ)   & [XX.X] & [XX.X] & [XX.X]  \\
-    \bottomrule
+    \textbf{Модель} & \textbf{предложенный} & \textbf{Mesh} & \textbf{SCom RT} \\
+    \input{generated/tab_fps_by_size}
   \end{tabular}
 \end{table}
 
@@ -334,9 +343,9 @@ RAM~\textbf{[XX]~ГБ}, Vulkan~\textbf{[1.3/1.4]}.
   \label{fig:frametime_vs_nodes}
 \end{figure}
 
-\textbf{Наблюдение:} при одинаковом размере SCom-файла предложенный метод демонстрирует
-демонстрирует \textbf{[X.X]--[XX] FPS}, что \textbf{[X]--[X] раз} выше
-чем у SCom Ray Tracing. Frame time растёт медленнее с увеличением узлов
+\textbf{Наблюдение:} при одинаковом размере SCom-файла предложенный метод
+демонстрирует \textbf{\SpeedupMin--\SpeedupMax} раз быстрее (в среднем~\textbf{\SpeedupAvg}~раза)
+чем SCom Ray Tracing. Frame time растёт медленнее с увеличением узлов
 благодаря отсечению.
 
 \subsection{Масштабируемость по разрешению}
@@ -349,21 +358,18 @@ RAM~\textbf{[XX]~ГБ}, Vulkan~\textbf{[1.3/1.4]}.
   \caption{FPS при различном разрешении (сцена Dragon, [XX] МБ).}
   \label{tab:fps_by_resolution}
   \begin{tabular}{lrrr}
-    \toprule
+
     \textbf{Разрешение}
       & \textbf{предложенный}
       & \textbf{SCom RT} \\
-    \midrule
-    1920$\times$1080   & [XX.X] & [XX.X]  \\
-    2560$\times$1440  & [XX.X] & [XX.X]  \\
-    3840$\times$2160   & [XX.X] & [XX.X]  \\
-    \bottomrule
+
+    \input{generated/tab_fps_by_res}
+
   \end{tabular}
 \end{table}
 
-\textbf{Наблюдение:} предложенный метод демонстрирует \textbf{[X.X] раз} меньшую
-деградацию FPS при переходе к высоким разрешениям по сравнению с
-трассировкой лучей.
+\textbf{Наблюдение:} предложенный метод демонстрирует \textbf{\ResDegOurs~раз} меньшую
+деградацию FPS при переходе к высоким разрешениям по сравнению с \textbf{\ResDegScom~раз} у SCom Ray Tracing.
 
 \subsection{Качество изображения}
 \label{sec:quality}
@@ -375,19 +381,17 @@ PSNR измерялся относительно эталонного ренде
   \caption{PSNR (дБ) для различных моделей.}
   \label{tab:psnr}
   \begin{tabular}{lrrr}
-    \toprule
+
     \textbf{Модель}
       & \textbf{предложенный}
       & \textbf{SCom RT (ref)} \\
-    \midrule
-    Dragon   & [XX.X] & [XX.X] \\
-    Bunny    & [XX.X] & [XX.X] \\
-    Armadillo& [XX.X] & [XX.X] \\
-    \bottomrule
+
+    \input{generated/tab_psnr}
+
   \end{tabular}
 \end{table}
 
-\textbf{Наблюдение:} разница PSNR составляет~\textbf{[X.X]~дБ},
+\textbf{Наблюдение:} разница PSNR составляет~\textbf{\PSNRdiffMin--\PSNRdiffMax~дБ},
 что \textbf{визуально незаметно} на стандартных ракурсах. Артефакты
 ступенчатости проявляются только при приближении к острым рёбрам.
 
@@ -399,16 +403,14 @@ PSNR измерялся относительно эталонного ренде
   \caption{Доля отсечённых узлов октодерева (\%).}
   \label{tab:culling_stats}
   \begin{tabular}{lrrr}
-    \toprule
+
     \textbf{Модель}
       & \textbf{Frustum}
       & \textbf{Hi-Z}
       & \textbf{Итого} \\
-    \midrule
-    Dragon   & [XX] & [XX] & [XX] \\
-    Bunny    & [XX] & [XX] & [XX] \\
-    Armadillo& [XX] & [XX] & [XX] \\
-    \bottomrule
+
+    \input{generated/tab_culling}
+
   \end{tabular}
 \end{table}
 
@@ -417,14 +419,11 @@ PSNR измерялся относительно эталонного ренде
   \caption{Ablation study: вклад каждого компонента.}
   \label{tab:ablation}
   \begin{tabular}{lrr}
-    \toprule
+
     \textbf{Конфигурация} & \textbf{FPS} & \textbf{Прирост} \\
-    \midrule
-    Naive MC               & [XX.X] & --- \\
-    + Frustum Culling      & [XX.X] & +[XX]\% \\
-    + Hi-Z Culling         & [XX.X] & +[XX]\% \\
-    + Mesh Shaders         & \textbf{[XX.X]} & +[XX]\% \\
-    \bottomrule
+
+    \input{generated/tab_ablation}
+
   \end{tabular}
 \end{table}
 
@@ -455,17 +454,11 @@ PSNR измерялся относительно эталонного ренде
   \caption{Метрики на сцене города.}
   \label{tab:city_metrics}
   \begin{tabular}{lr}
-    \toprule
+
     \textbf{Метрика} & \textbf{Значение} \\
-    \midrule
-    FPS               & [XX.X] \\
-    GPU Scene Memory  & [XXX] МБ \\
-    Всего листьев     & [XXX\,XXX] \\
-    Активных листьев  & [XXX\,XXX] \\
-    Отсечено Frustum  & [XX]\% \\
-    Отсечено Hi-Z     & [XX]\% \\
-    Отсечено LOD      & [XX]\% \\
-    \bottomrule
+
+    \input{generated/tab_city}
+
   \end{tabular}
 \end{table}
 

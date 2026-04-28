@@ -1,7 +1,2 @@
-*.aux
-*.log
-*.out
-*.toc
-*.pdf
-*.fls
-*.fdb_latexmk
+bench/results.json
+generated/

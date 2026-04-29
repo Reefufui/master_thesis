@@ -4,7 +4,10 @@ import os
 
 os.makedirs("generated", exist_ok=True)
 
-data = json.load(open("bench/results.json"))
+import json, os
+example_path = "bench/results.json.example"
+main_path = "bench/results.json"
+data = json.load(open(main_path if os.path.exists(main_path) else example_path))
 
 with open("generated/macros.tex", "w", encoding="utf-8") as f:
     def cmd(name, value):
@@ -44,44 +47,95 @@ with open("generated/macros.tex", "w", encoding="utf-8") as f:
     cmd("ResDegOurs", f'{deg_ours:.1f}')
     cmd("ResDegScom", f'{deg_scom:.1f}')
 
-ROW_END = " \\\\\n"
-
-def write_table(filename, rows, formatter):
+def gen_table(filename, spec, header, rows, caption, label):
     with open(f"generated/{filename}", "w", encoding="utf-8") as f:
-        for i, row in enumerate(rows):
-            line = formatter(row)
-            eol = ROW_END if i < len(rows) - 1 else "\n"
-            f.write(line + eol)
+        f.write("\\begin{table}[h]\n")
+        f.write("  \\centering\n")
+        f.write(f"  \\caption{{{caption}}}\n")
+        f.write(f"  \\label{{{label}}}\n")
+        f.write(f"  \\begin{{tabular}}{{{spec}}}\n")
+        f.write("    \\toprule\n")
+        f.write(header + "\n")
+        f.write("    \\midrule\n")
+        for row in rows[:-1]:
+            f.write(row + " \\\\\n")
+        f.write(rows[-1] + " \\\\\n")
+        f.write("    \\bottomrule\n")
+        f.write("  \\end{tabular}\n")
+        f.write("\\end{table}\n")
 
-write_table("tab_fps_by_size.tex", data["fps_by_size"],
-    lambda r: f"    {r['model']} ({r['size_mb']} МБ) & {r['ours']:.1f} & {r['mesh']:.1f} & {r['scom_rt']:.1f}")
+gen_table("tab_fps_by_size.tex", "lrrrr",
+    "    \\textbf{Модель} & \\textbf{предложенный} & \\textbf{Mesh} & \\textbf{SCom RT} \\\\",
+    [f"    {r['model']} ({r['size_mb']} МБ) & {r['ours']:.1f} & {r['mesh']:.1f} & {r['scom_rt']:.1f}" for r in data["fps_by_size"]],
+    "FPS при различном размере SCom-файла.",
+    "tab:fps_by_size")
 
-write_table("tab_fps_by_res.tex", data["fps_by_resolution"],
-    lambda r: f"    {r['resolution']} & {r['ours']:.1f} & {r['scom_rt']:.1f}")
+gen_table("tab_fps_by_res.tex", "lrrr",
+    "    \\textbf{Разрешение} & \\textbf{предложенный} & \\textbf{SCom RT} \\\\",
+    [f"    {r['resolution']} & {r['ours']:.1f} & {r['scom_rt']:.1f}" for r in data["fps_by_resolution"]],
+    "FPS при различном разрешении.",
+    "tab:fps_by_resolution")
 
-write_table("tab_psnr.tex", data["psnr"],
-    lambda r: f"    {r['model']} & {r['ours']:.1f} & {r['scom_rt']:.1f}")
+gen_table("tab_psnr.tex", "lrrr",
+    "    \\textbf{Модель} & \\textbf{предложенный} & \\textbf{SCom RT (ref)} \\\\",
+    [f"    {r['model']} & {r['ours']:.1f} & {r['scom_rt']:.1f}" for r in data["psnr"]],
+    "PSNR (дБ) для различных моделей.",
+    "tab:psnr")
 
-write_table("tab_culling.tex", data["culling"],
-    lambda r: f"    {r['model']} & {r['frustum_pct']} & {r['hiz_pct']} & {r['total_pct']}")
+gen_table("tab_culling.tex", "lrrrr",
+    "    \\textbf{Модель} & \\textbf{Frustum} & \\textbf{Hi-Z} & \\textbf{Итого} \\\\",
+    [f"    {r['model']} & {r['frustum_pct']} & {r['hiz_pct']} & {r['total_pct']}" for r in data["culling"]],
+    "Доля отсечённых узлов октодерева.",
+    "tab:culling_stats")
 
-def ablation_fmt(r):
-    gain = str(r["gain_pct"]) if r["gain_pct"] is not None else "---"
-    return f"    {r['config']} & {r['fps']:.1f} & {gain}"
+def ablation_rows():
+    rows = []
+    for r in data["ablation"]:
+        gain = f"+{r['gain_pct']}" if r["gain_pct"] is not None else "---"
+        rows.append(f"    {r['config']} & {r['fps']:.1f} & {gain}")
+    return rows
 
-write_table("tab_ablation.tex", data["ablation"], ablation_fmt)
+gen_table("tab_ablation.tex", "lrrr",
+    "    \\textbf{Конфигурация} & \\textbf{FPS} & \\textbf{Прирост} \\\\",
+    ablation_rows(),
+    "Ablation study: вклад каждого компонента.",
+    "tab:ablation")
 
 with open("generated/tab_city.tex", "w", encoding="utf-8") as f:
     c = data["city_scene"]
-    rows = [
-        f"    FPS & {c['fps']:.1f}",
-        f"    GPU Scene Memory & {c['gpu_memory_mb']} МБ",
-        f"    Всего листьев & {c['total_leaves']:,}",
-        f"    Активных листьев & {c['active_leaves']:,}",
-        f"    Отсечено Frustum & {c['frustum_pct']}\%",
-        f"    Отсечено Hi-Z & {c['hiz_pct']}\%",
-        f"    Отсечено LOD & {c['lod_pct']}\%",
-    ]
-    f.write(ROW_END.join(rows) + "\n")
+    f.write("\\begin{table}[h]\n")
+    f.write("  \\centering\n")
+    f.write("  \\caption{Метрики на сцене города.}\n")
+    f.write("  \\label{tab:city_metrics}\n")
+    f.write("  \\begin{tabular}{lr}\n")
+    f.write("    \\toprule\n")
+    f.write("    \\textbf{Метрика} & \\textbf{Значение} \\\\\n")
+    f.write("    \\midrule\n")
+    f.write(f"    FPS & {c['fps']:.1f} \\\\\n")
+    f.write(f"    GPU Scene Memory & {c['gpu_memory_mb']} МБ \\\\\n")
+    f.write(f"    Всего листьев & {c['total_leaves']:,} \\\\\n")
+    f.write(f"    Активных листьев & {c['active_leaves']:,} \\\\\n")
+    f.write(f"    Отсечено Frustum & {c['frustum_pct']}\\% \\\\\n")
+    f.write(f"    Отсечено Hi-Z & {c['hiz_pct']}\\% \\\\\n")
+    f.write(f"    Отсечено LOD & {c['lod_pct']}\\% \\\\\n")
+    f.write("    \\bottomrule\n")
+    f.write("  \\end{tabular}\n")
+    f.write("\\end{table}\n")
+
+with open("generated/tab_scenes.tex", "w", encoding="utf-8") as f:
+    f.write("\\begin{table}[h]\n")
+    f.write("  \\centering\n")
+    f.write("  \\caption{Тестовые модели.}\n")
+    f.write("  \\label{tab:scenes}\n")
+    f.write("  \\begin{tabular}{lrr}\n")
+    f.write("    \\toprule\n")
+    f.write("    \\textbf{Модель} & \\textbf{Треугольников} & \\textbf{Размер SCom, МБ} \\\\\n")
+    f.write("    \\midrule\n")
+    for s in data["scenes"]:
+        tris = f"{s['triangles']:,}".replace(",", "\\,")
+        f.write(f"    {s['model']} & {tris} & {s['size_mb']} \\\\\n")
+    f.write("    \\bottomrule\n")
+    f.write("  \\end{tabular}\n")
+    f.write("\\end{table}\n")
 
 print("Generated files in generated/")

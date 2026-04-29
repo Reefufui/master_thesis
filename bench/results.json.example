@@ -1,4 +1,10 @@
 {
+  "scenes": [
+    {"model": "Dragon",       "triangles": 871000,  "size_mb": "4--64"},
+    {"model": "Bunny",        "triangles": 69000,   "size_mb": "2--32"},
+    {"model": "Armadillo",    "triangles": 346000,  "size_mb": "4--64"},
+    {"model": "Happy Buddha", "triangles": 1087000, "size_mb": "8--128"}
+  ],
   "hardware": {
     "gpu": "NVIDIA RTX XXXX",
     "cpu": "Intel Core iX-XXXXX",

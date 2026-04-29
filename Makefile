@@ -11,11 +11,15 @@ $(RESULTS_JSON):
 paper: results
 	export PATH=/Library/TeX/texbin:$$PATH && \
 	xelatex -interaction=nonstopmode main.tex && \
+	bibtex main && \
+	xelatex -interaction=nonstopmode main.tex && \
 	xelatex -interaction=nonstopmode main.tex
 
 paper-only:
 	python3 scripts/gen_paper_data.py
 	export PATH=/Library/TeX/texbin:$$PATH && \
+	xelatex -interaction=nonstopmode main.tex && \
+	bibtex main && \
 	xelatex -interaction=nonstopmode main.tex && \
 	xelatex -interaction=nonstopmode main.tex
 

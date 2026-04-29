@@ -291,24 +291,8 @@ RAM~\textbf{\HWramGB~ГБ}, Vulkan~\textbf{\HWvulkan}.
 
 \subsubsection{Тестовые модели}
 
-Использовались модели из Stanford 3D Scanning Repository~\cite{stanford_models}
-(Таблица~\ref{tab:scenes}).
-
-\begin{table}[h]
-  \centering
-  \caption{Тестовые модели.}
-  \label{tab:scenes}
-  \begin{tabular}{lrr}
-
-    \textbf{Модель} & \textbf{Треугольников} & \textbf{Размер SCom, МБ} \\
-
-    Dragon       &   871\,000 & [X.X]--[XX] \\
-    Bunny        &    69\,000 & [X.X]--[XX] \\
-    Armadillo    &   346\,000 & [X.X]--[XX] \\
-    Happy Buddha & 1\,087\,000 & [X.X]--[XX] \\
-
-  \end{tabular}
-\end{table}
+Использовались модели из Stanford 3D Scanning Repository~\cite{stanford_models}.
+\input{generated/tab_scenes}
 
 \subsubsection{Метрики}
 
@@ -322,18 +306,10 @@ RAM~\textbf{\HWramGB~ГБ}, Vulkan~\textbf{\HWvulkan}.
 \label{sec:scalability_size}
 
 Данный эксперимент проверяет гипотезу: \textbf{frame time предложенного метода
-слабо зависит от количества узлов октодерева}, что достигается за счёт
+ слабо зависит от количества узлов октодерева}, что достигается за счёт
 иерархического отсечения.
 
-\begin{table}[h]
-  \centering
-  \caption{FPS при различном размере SCom-файла.}
-  \label{tab:fps_by_size}
-  \begin{tabular}{lrrrr}
-    \textbf{Модель} & \textbf{предложенный} & \textbf{Mesh} & \textbf{SCom RT} \\
-    \input{generated/tab_fps_by_size}
-  \end{tabular}
-\end{table}
+\input{generated/tab_fps_by_size}
 
 \begin{figure}[h]
   \centering
@@ -353,20 +329,7 @@ RAM~\textbf{\HWramGB~ГБ}, Vulkan~\textbf{\HWvulkan}.
 
 Проверяется: \textbf{увеличение разрешения меньше влияет на предложенный метод, чем на SCom Ray Tracing}.
 
-\begin{table}[h]
-  \centering
-  \caption{FPS при различном разрешении (сцена Dragon, [XX] МБ).}
-  \label{tab:fps_by_resolution}
-  \begin{tabular}{lrrr}
-
-    \textbf{Разрешение}
-      & \textbf{предложенный}
-      & \textbf{SCom RT} \\
-
-    \input{generated/tab_fps_by_res}
-
-  \end{tabular}
-\end{table}
+\input{generated/tab_fps_by_res}
 
 \textbf{Наблюдение:} предложенный метод демонстрирует \textbf{\ResDegOurs~раз} меньшую
 деградацию FPS при переходе к высоким разрешениям по сравнению с \textbf{\ResDegScom~раз} у SCom Ray Tracing.
@@ -376,20 +339,7 @@ RAM~\textbf{\HWramGB~ГБ}, Vulkan~\textbf{\HWvulkan}.
 
 PSNR измерялся относительно эталонного рендера SCom Ray Tracing.
 
-\begin{table}[h]
-  \centering
-  \caption{PSNR (дБ) для различных моделей.}
-  \label{tab:psnr}
-  \begin{tabular}{lrrr}
-
-    \textbf{Модель}
-      & \textbf{предложенный}
-      & \textbf{SCom RT (ref)} \\
-
-    \input{generated/tab_psnr}
-
-  \end{tabular}
-\end{table}
+\input{generated/tab_psnr}
 
 \textbf{Наблюдение:} разница PSNR составляет~\textbf{\PSNRdiffMin--\PSNRdiffMax~дБ},
 что \textbf{визуально незаметно} на стандартных ракурсах. Артефакты
@@ -398,34 +348,9 @@ PSNR измерялся относительно эталонного ренде
 \subsection{Эффективность оптимизаций}
 \label{sec:optimizations}
 
-\begin{table}[h]
-  \centering
-  \caption{Доля отсечённых узлов октодерева (\%).}
-  \label{tab:culling_stats}
-  \begin{tabular}{lrrr}
+\input{generated/tab_culling}
 
-    \textbf{Модель}
-      & \textbf{Frustum}
-      & \textbf{Hi-Z}
-      & \textbf{Итого} \\
-
-    \input{generated/tab_culling}
-
-  \end{tabular}
-\end{table}
-
-\begin{table}[h]
-  \centering
-  \caption{Ablation study: вклад каждого компонента.}
-  \label{tab:ablation}
-  \begin{tabular}{lrr}
-
-    \textbf{Конфигурация} & \textbf{FPS} & \textbf{Прирост} \\
-
-    \input{generated/tab_ablation}
-
-  \end{tabular}
-\end{table}
+\input{generated/tab_ablation}
 
 \subsection{Реальное применение}
 \label{sec:real_world}
@@ -449,18 +374,7 @@ PSNR измерялся относительно эталонного ренде
 
 \subsubsection{Метрики}
 
-\begin{table}[h]
-  \centering
-  \caption{Метрики на сцене города.}
-  \label{tab:city_metrics}
-  \begin{tabular}{lr}
-
-    \textbf{Метрика} & \textbf{Значение} \\
-
-    \input{generated/tab_city}
-
-  \end{tabular}
-\end{table}
+\input{generated/tab_city}
 
 \section{Результаты}
 \label{sec:results}

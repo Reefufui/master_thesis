@@ -1,74 +1,74 @@
-# Ускорение растеризации неявных поверхностей на GPU
+# Accelerating Implicit Surface Rasterization on GPUs
 
-**Магистерская диссертация** — Ускорение алгоритмов растеризации поверхностей, заданных неявными функциями, на графических процессорах
+**Master's Thesis** — Accelerating Rasterization of Surfaces Defined by Implicit Functions on Graphics Processors
 
-**Andrey Trifonov** — МГУ им. М.В. Ломоносова, 2026
+**Andrey Trifonov** — Lomonosov Moscow State University, 2026
 
 ---
 
-## Структура
+## Structure
 
 ```
 .
-├── thesis/           # Диссертация (XeLaTeX)
+├── thesis/           # Master's thesis (XeLaTeX)
 │   ├── main.tex
-│   ├── chapters/     # 6 глав
+│   ├── chapters/     # 6 chapters
 │   ├── Makefile
-│   └── bench/         # Бенчмарки
-├── article/          # Статья (PG2026 Eurographics)
-│   └── *.tex, *.sty  # Официальный шаблон
-└── sdf_raster/       # Исходный код (submodule)
+│   └── bench/        # Benchmarks
+├── article/          # Conference paper (PG2026 Eurographics)
+│   └── *.tex, *.sty  # Official template
+└── sdf_raster/       # Source code (submodule)
 ```
 
 ---
 
-## Диссертация
+## Thesis
 
 ```bash
 cd thesis
 
-# Установка пакетов (если нужно)
+# Install packages (if needed)
 tlmgr install gost tex-gyre comment lastpage
 
-# Сборка (XeLaTeX)
-make all       # бенчмарки + данные + PDF
-make paper     # только PDF
+# Build (XeLaTeX)
+make all       # benchmarks + data + PDF
+make paper     # PDF only
 make clean
 ```
 
 **Pipeline:** `gen_paper_data.py` → `xelatex` → `bibtex` → `xelatex` → `xelatex`
 
-**Результат:** `thesis/build/main.pdf`
+**Output:** `thesis/build/main.pdf`
 
 ---
 
-## Статья
+## Article
 
-Шаблон PG2026 Eurographics с [pacificgraphics2026.github.io](https://pacificgraphics2026.github.io/)
+PG2026 Eurographics template from [pacificgraphics2026.github.io](https://pacificgraphics2026.github.io/)
 
 ```bash
 cd article
 
-# Сборка шаблона (pdflatex)
+# Build template (pdflatex)
 pdflatex EGauthorGuidelines-PG2026-sub.tex
 ```
 
 ---
 
-## Клонирование
+## Clone
 
 ```bash
 git clone --recurse-submodules https://github.com/Reefufui/master_thesis.git
 cd master_thesis
 
-# Сборка sdf_raster
+# Build sdf_raster
 cd sdf_raster && mkdir build && cd build
 cmake .. && cmake --build . --config Release
 ```
 
 ---
 
-## Требования
+## Requirements
 
 - CMake 3.20+, C++20, Vulkan SDK 1.3+
 - Python 3.10+

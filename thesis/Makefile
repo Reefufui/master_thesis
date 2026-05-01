@@ -1,13 +1,10 @@
 .PHONY: all results paper paper-only clean
 
+SCRIPT_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 BUILD_DIR = build
-RESULTS_JSON = bench/results.json
 
-results: $(RESULTS_JSON)
-	python3 scripts/gen_paper_data.py
-
-$(RESULTS_JSON):
-	bash bench/run_bench.sh
+results:
+	python3 $(SCRIPT_DIR)scripts/gen_paper_data.py
 
 paper: results
 	@mkdir -p $(BUILD_DIR)
@@ -19,7 +16,7 @@ paper: results
 
 paper-only:
 	@mkdir -p $(BUILD_DIR)
-	python3 scripts/gen_paper_data.py
+	python3 $(SCRIPT_DIR)scripts/gen_paper_data.py
 	export PATH=/Library/TeX/texbin:$$PATH && \
 		xelatex -output-directory=$(BUILD_DIR) -interaction=nonstopmode main.tex && \
 		bibtex $(BUILD_DIR)/main && \

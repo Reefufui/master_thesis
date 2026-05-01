@@ -1,3 +1,8 @@
-bench/results.json
-generated/
-build/
+# LaTeX build output
+thesis/build/
+article/build/
+thesis/generated/
+thesis/bench/results.json
+
+# sdf_raster build
+sdf_raster/build/

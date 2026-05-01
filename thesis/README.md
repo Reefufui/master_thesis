@@ -2,7 +2,23 @@
 
 **Ускорение алгоритмов растеризации поверхностей, заданных неявными функциями, на графических процессорах**
 
-## Быстрый старт
+## Структура
+
+```
+.
+├── thesis/           # Магистерская диссертация (LaTeX)
+│   ├── main.tex
+│   ├── chapters/
+│   ├── Makefile      # make paper | make all | make clean
+│   └── bench/        # Бенчмарки для sdf_raster
+├── article/          # Английская статья (заготовка)
+│   ├── main.tex
+│   ├── sections/
+│   └── Makefile      # make pdf
+└── sdf_raster/       # Исходный код (git submodule)
+```
+
+## Быстрый старт (диссертация)
 
 ```bash
 # 1. Клонировать репозиторий с подмодулями
@@ -16,10 +32,18 @@ cmake .. && cmake --build . --config Release
 cd ../..
 
 # 3. Запуск бенчмарков (результаты в bench/results.json)
+cd thesis
 ./bench/run_bench.sh
 
 # 4. Генерация PDF
 make all
+```
+
+## Быстрый старт (статья)
+
+```bash
+cd article
+make pdf
 ```
 
 ## Детальная инструкция

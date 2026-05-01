@@ -11,10 +11,10 @@
 │   ├── chapters/
 │   ├── Makefile      # make paper | make all | make clean
 │   └── bench/        # Бенчмарки для sdf_raster
-├── article/          # Английская статья (заготовка)
-│   ├── main.tex
-│   ├── sections/
-│   └── Makefile      # make pdf
+├── article/          # Английская статья (PG2026 Eurographics)
+│   ├── *.tex         # Шаблоны из официального пакета
+│   ├── *.sty, *.cls  # Стили Eurographics
+│   └── *.pdf         # Примеры готовых статей
 └── sdf_raster/       # Исходный код (git submodule)
 ```
 
@@ -41,9 +41,13 @@ make all
 
 ## Быстрый старт (статья)
 
+Шаблон PG2026 Eurographics загружен с [официального сайта](https://pacificgraphics2026.github.io/#):
+[pg2026_latex_template.zip](https://pacificgraphics2026.github.io/pg2026_latex_template.zip)
+
 ```bash
 cd article
-make pdf
+# Выбери нужный шаблон, например:
+pdflatex EGauthorGuidelines-PG2026-sub.tex
 ```
 
 ## Детальная инструкция

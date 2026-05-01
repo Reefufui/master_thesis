@@ -1,0 +1,102 @@
+\section{Эксперименты}
+\label{sec:experiments}
+
+В данной главе представлена экспериментальная оценка \textbf{предложенного метода}.
+Исследуются масштабируемость по размеру модели и разрешению изображения,
+качество изображения, эффективность оптимизаций и практическое применение.
+
+\subsection{Методология}
+\label{sec:methodology}
+
+\subsubsection{Аппаратная конфигурация}
+
+Эксперименты проводились на следующей платформе:
+видеокарта~\textbf{\HWgpu}, CPU~\textbf{\HWcpu} @ \textbf{\HWcpuGHz~ГГц},
+RAM~\textbf{\HWramGB~ГБ}, Vulkan~\textbf{\HWvulkan}.
+
+\subsubsection{Тестовые модели}
+
+Использовались модели из Stanford 3D Scanning Repository~\cite{stanford_models}.
+\input{generated/tab_scenes}
+
+\subsubsection{Метрики}
+
+\begin{itemize}
+    \item \textbf{FPS (Frames Per Second, кадров в секунду)~\cite[с.~1]{RTR4}} --- частота обновления изображения, определяемая как количество кадров, отрисовываемых за одну секунду ($t_f = 1/\text{FPS}$ --- время рендеринга одного кадра)
+    \item \textbf{PSNR (Peak Signal-to-Noise Ratio, дБ)} --- пиковое отношение сигнал/шум, измеряемое в децибелах, для сравнения качества изображения
+    \item \textbf{Доля отсечения} --- процент узлов, отсечённых на этапах, перечисленных в \ref{sec:optimizations}
+\end{itemize}
+
+\subsection{Масштабируемость по размеру модели}
+\label{sec:scalability_size}
+
+Данный эксперимент проверяет гипотезу: \textbf{frame time предложенного метода
+ слабо зависит от количества узлов октодерева}, что достигается за счёт
+иерархического отсечения.
+
+\input{generated/tab_fps_by_size}
+
+\begin{figure}[h]
+  \centering
+  \fbox{\parbox{0.9\linewidth}{\centering\vspace{2cm}
+    [ГРАФИК: Frame Time vs Количество узлов]}}
+  \caption{Зависимость frame time от количества узлов октодерева.}
+  \label{fig:frametime_vs_nodes}
+\end{figure}
+
+\textbf{Наблюдение:} при одинаковом размере SCom-файла предложенный метод
+демонстрирует \textbf{\SpeedupMin--\SpeedupMax} раз быстрее (в среднем~\textbf{\SpeedupAvg}~раза)
+чем SCom Ray Tracing. Frame time растёт медленнее с увеличением узлов
+благодаря отсечению.
+
+\subsection{Масштабируемость по разрешению}
+\label{sec:scalability_resolution}
+
+Проверяется: \textbf{увеличение разрешения меньше влияет на предложенный метод, чем на SCom Ray Tracing}.
+
+\input{generated/tab_fps_by_res}
+
+\textbf{Наблюдение:} предложенный метод демонстрирует \textbf{\ResDegOurs~раз} меньшую
+деградацию FPS при переходе к высоким разрешениям по сравнению с \textbf{\ResDegScom~раз} у SCom Ray Tracing.
+
+\subsection{Качество изображения}
+\label{sec:quality}
+
+PSNR измерялся относительно эталонного рендера SCom Ray Tracing.
+
+\input{generated/tab_psnr}
+
+\textbf{Наблюдение:} разница PSNR составляет~\textbf{\PSNRdiffMin--\PSNRdiffMax~дБ},
+что \textbf{визуально незаметно} на стандартных ракурсах. Артефакты
+ступенчатости проявляются только при приближении к острым рёбрам.
+
+\subsection{Эффективность оптимизаций}
+\label{sec:optimizations}
+
+\input{generated/tab_culling}
+
+\input{generated/tab_ablation}
+
+\subsection{Реальное применение}
+\label{sec:real_world}
+
+Для демонстрации практической ценности предложенного метода была создана сцена
+\textbf{города с деревьями}.
+
+\subsubsection{Описание сцены}
+
+[TODO: Описание как создавалась сцена города и деревьев]
+
+\begin{itemize}
+    \item Город: [описание процедурной генерации / источника]
+    \item Деревья: [описание]
+\end{itemize}
+
+\subsubsection{Траектория камеры}
+
+[TODO: Описание траектории - как получена (ручная запись / автогенерация),
+зачем нужна (валидация на динамических сценах)]
+
+\subsubsection{Метрики}
+
+\input{generated/tab_city}

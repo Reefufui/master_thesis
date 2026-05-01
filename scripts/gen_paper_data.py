@@ -64,6 +64,26 @@ def gen_table(filename, spec, header, rows, caption, label):
         f.write("  \\end{tabular}\n")
         f.write("\\end{table}\n")
 
+def gen_methods_comparison():
+    with open("generated/tab_methods_comparison.tex", "w", encoding="utf-8") as f:
+        f.write("\\begin{table}[h]\n")
+        f.write("  \\centering\n")
+        f.write("  \\caption{Сравнение методов рендеринга SDF.}\n")
+        f.write("  \\label{tab:methods_comparison}\n")
+        f.write("  \\begin{tabular}{lccc}\n")
+        f.write("    \\toprule\n")
+        f.write("    \\textbf{Метод} & \\textbf{Качество} & \\textbf{Производительность} & \\textbf{Точность SDF} \\\\\n")
+        f.write("    \\midrule\n")
+        f.write("    Sphere Tracing & Высокое & Низкая & Точная \\\\\n")
+        f.write("    Volume Rendering (MLP) & Высокое & Очень низкая & Точная \\\\\n")
+        f.write("    Voxel + RT & Среднее & Средняя & Приближённая \\\\\n")
+        f.write("    \\textbf{SDF Rasterization (ours)} & \\textbf{Высокое} & \\textbf{Высокая} & \\textbf{Точная} \\\\\n")
+        f.write("    \\bottomrule\n")
+        f.write("  \\end{tabular}\n")
+        f.write("\\end{table}\n")
+
+gen_methods_comparison()
+
 gen_table("tab_fps_by_size.tex", "lrrrr",
     "    \\textbf{Модель} & \\textbf{предложенный} & \\textbf{Mesh} & \\textbf{SCom RT} \\\\",
     [f"    {r['model']} ({r['size_mb']} МБ) & {r['ours']:.1f} & {r['mesh']:.1f} & {r['scom_rt']:.1f}" for r in data["fps_by_size"]],

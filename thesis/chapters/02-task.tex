@@ -27,9 +27,9 @@ d(x,\partial\Omega) = \inf_{y \in \partial\Omega} \lVert x - y \rVert_2 \in \mat
 \[
 \operatorname{SDF}(x) =
 \begin{cases}
- d(x,\partial\Omega),   & x \in \Omega,\\[2pt]
+ d(x,\partial\Omega),   & x \notin \Omega,\\[2pt]
  0,                     & x \in \partial\Omega,\\[2pt]
- -d(x,\partial\Omega),  & x \notin \Omega.
+ -d(x,\partial\Omega),  & x \in \Omega.
 \end{cases}
 \]
 

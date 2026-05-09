@@ -22,15 +22,15 @@ RAM~\textbf{\HWramGB~ГБ}, Vulkan~\textbf{\HWvulkan}.
 \subsubsection{Метрики}
 
 \begin{itemize}
-    \item \textbf{FPS (Frames Per Second, кадров в секунду)~\cite[с.~1]{RTR4}} --- частота обновления изображения, определяемая как количество кадров, отрисовываемых за одну секунду ($t_f = 1/\text{FPS}$ --- время рендеринга одного кадра)
-    \item \textbf{PSNR (Peak Signal-to-Noise Ratio, дБ)} --- пиковое отношение сигнал/шум, измеряемое в децибелах, для сравнения качества изображения
-    \item \textbf{Доля отсечения} --- процент узлов, отсечённых на этапах, перечисленных в \ref{sec:optimizations}
+    \item \textbf{FPS (Frames Per Second, кадров в секунду)~\cite[с.~1]{RTR4}} --- частота обновления изображения, определяемая как количество кадров, отрисовываемых за одну секунду ($t_f = 1/\text{FPS}$ --- время рендеринга одного кадра).
+    \item \textbf{PSNR (Peak Signal-to-Noise Ratio, дБ)} --- пиковое отношение сигнал/шум, измеряемое в децибелах, для сравнения качества изображения.
+    \item \textbf{Доля отсечения} --- процент узлов, отсечённых на этапах, перечисленных в разд.~\ref{sec:optimizations}.
 \end{itemize}
 
 \subsection{Масштабируемость по размеру модели}
 \label{sec:scalability_size}
 
-Данный эксперимент проверяет гипотезу: \textbf{frame time предложенного метода
+Данный эксперимент проверяет гипотезу: \textbf{время кадра (frame time) предложенного метода
  слабо зависит от количества узлов октодерева}, что достигается за счёт
 иерархического отсечения.
 
@@ -45,9 +45,10 @@ RAM~\textbf{\HWramGB~ГБ}, Vulkan~\textbf{\HWvulkan}.
 \end{figure}
 
 \textbf{Наблюдение:} при одинаковом размере SCom-файла предложенный метод
-демонстрирует \textbf{\SpeedupMin--\SpeedupMax} раз быстрее (в среднем~\textbf{\SpeedupAvg}~раза)
-чем SCom Ray Tracing. Frame time растёт медленнее с увеличением узлов
+ работает в \textbf{\SpeedupMin--\SpeedupMax} раз быстрее (в среднем в~\textbf{\SpeedupAvg}~раза),
+чем SCom Ray Tracing. Время кадра растёт медленнее с увеличением узлов
 благодаря отсечению.
+
 
 \subsection{Масштабируемость по разрешению}
 \label{sec:scalability_resolution}

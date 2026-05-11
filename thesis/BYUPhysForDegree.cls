@@ -187,15 +187,15 @@
 
 % A command to make margins right for the initial single sided business.
 \newcommand{\preliminarymargins}{%
-    \addtolength{\textwidth}{-0.5in}%
-    \addtolength{\evensidemargin}{0.5in}%
+    %\addtolength{\textwidth}{-0.5in}%
+    %\addtolength{\evensidemargin}{0.5in}%
     \ch@ngetext%
     }
 
 % A command to fix the margins after the initial single sided business.
 \newcommand{\fixmargins}{%
-    \addtolength{\textwidth}{0.5in}
-    \addtolength{\evensidemargin}{-0.5in}
+    %\addtolength{\textwidth}{0.5in}
+    %\addtolength{\evensidemargin}{-0.5in}
     \ch@ngetext%
 }
 

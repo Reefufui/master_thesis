@@ -23,26 +23,8 @@
 
 Для экспериментов были выбраны модели, изображенные на рисунке \ref{fig:model_showcase}. Тесты прододились с фикированной камерой и статическим уровнем детализации (в таблицах \ref{tab:scom_comparison_full_3840} и \ref{tab:scom_comparison_full_1920} обозначен как \textbf{L}).
 
-Предложенный метод сопоставим по точности с трассировкой лучей под авторством Söderlund \cite{soderlund2022ray}, использованной для визуализации SCom Tree в оригинальной статье этого метода представления \cite{garifullin2025compact}.
+Предложенный метод сопоставим по точности с трассировкой лучей под авторством Söderlund \cite{soderlund2022ray}, использованной для визуализации SCom Tree в оригинальной статье этого метода представления \cite{garifullin2025compact} (см. таблицы и графики в текущем разделе).
 
-\clearpage
-\pagestyle{empty}
-\input{tables/scom_comparison_full_3840.tex}
-
-\clearpage
-\pagestyle{empty}
-\input{tables/scom_comparison_full_1920.tex}
-
-\clearpage
-\pagestyle{empty}
-\input{tables/decimation_stats_1920.tex}
-
-\clearpage
-\pagestyle{empty}
-\input{tables/decimation_stats_3840.tex}
-
-\clearpage
-\pagestyle{plain}
 \begin{figure}[ht!]
     \centering
     \includegraphics[width=\textwidth]{figures/model_showcase.png} 
@@ -50,10 +32,23 @@
     \label{fig:model_showcase}
 \end{figure}
 
+\clearpage
+\input{tables/scom_comparison_full_3840.tex}
+
+\clearpage
+\input{tables/scom_comparison_full_1920.tex}
+
+\clearpage
+\input{tables/decimation_stats_1920.tex}
+
+\clearpage
+\input{tables/decimation_stats_3840.tex}
+
+\input{figures/lod_grids.tex}
+
 \input{figures/plots_3840.tex}
 
 \input{figures/plots_1920.tex}
 
 \clearpage
-\pagestyle{plain}
 

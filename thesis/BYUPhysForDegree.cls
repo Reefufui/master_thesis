@@ -204,6 +204,7 @@
   \newcommand{\makepreliminarypages}{
     \preliminarymargins 
     \titlepage 
+    \abstractpage 
 %	\copyrightpage 
 %	\seniorapprovalpage 
 %    \acknowledgmentspage 
@@ -582,19 +583,6 @@
     \end{center}   
     \renewcommand{\baselinestretch}{1.33}\small\normalsize
     \@Abstract
-    \vfill	
-
-    \begin{center}
- 	%\providecommand\pdfbookmark[3][]{} \pdfbookmark[0]{Abstract}{bm:Abstract}    
-    \vspace*{0.375in}
-    {\bf Abstract}\\[1\baselineskip]
-    {\large \@TitleTopEng\\
-    \@TitleBottomEng}\\[1\baselineskip]
-    {\em \@AuthorEng}\\[\baselineskip]
-    \end{center}   
-    \renewcommand{\baselinestretch}{1.33}\small\normalsize
-    \@AbstractEng
-
     \end{abstractenv}
     \clearemptydoublepage
   }
